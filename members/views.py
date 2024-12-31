@@ -12,7 +12,6 @@ def members(request: HttpRequest):
         'mymembers': members,
      
     }
-    print(request)
     return HttpResponse(template.render(context, request))
 
 def users(request):
@@ -24,5 +23,19 @@ def member_details(request: HttpRequest ,id):
     
     context = {
         'mymember' : find_member
+    }
+    return HttpResponse(template.render(context,request))
+
+def main_page(request):
+    template = loader.get_template('main.html')
+    print(request)
+    return HttpResponse(template.render())
+
+def testing(request):
+    template = loader.get_template('template.html')
+    context = {
+        'fruits': [
+            'Apple', "Banana", "Pork Choi"
+        ]
     }
     return HttpResponse(template.render(context,request))
