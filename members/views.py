@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpRequest
 from django.template import loader
 from  .models import Member
 # Create your views here.
+import psycopg2
 
 
 def members(request: HttpRequest):
@@ -17,6 +18,7 @@ def members(request: HttpRequest):
 def users(request):
     return HttpResponse("users page")
 
+
 def member_details(request: HttpRequest ,id):
     find_member = Member.objects.get(id=id)
     template = loader.get_template('details.html')
@@ -27,6 +29,20 @@ def member_details(request: HttpRequest ,id):
     return HttpResponse(template.render(context,request))
 
 def main_page(request):
+    
+
+    try:
+        conn = psycopg2.connect(
+            dbname="django_2",
+            user="django_2",
+            password="django-123",
+            host="database-2.ch280gy42n7e.ap-southeast-2.rds.amazonaws.com",
+            port="5432"
+        )
+        print("Connection successful!")
+    except Exception as e:
+        print(f"Error: {e}")
+
     template = loader.get_template('main.html')
     print(request)
     return HttpResponse(template.render())
